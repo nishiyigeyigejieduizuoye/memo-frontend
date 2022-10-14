@@ -5,12 +5,14 @@ import DefaultStatus from "@/components/DefaultStatus";
 import LoginPage from "./pages/LoginPage";
 import NeedLoginPage from "./components/NeedLoginPage";
 import IndexPage from "./pages/IndexPage";
+import GlobalMessage from "./components/GlobalMessage";
 
 function App() {
   return (
     <RecoilRoot>
       <>
         <DefaultStatus />
+        <GlobalMessage />
         <HashRouter>
           <Routes>
             <Route
