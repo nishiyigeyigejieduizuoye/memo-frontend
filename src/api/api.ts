@@ -15,3 +15,10 @@ export async function login(username: string, password: string) {
     password,
   });
 }
+
+export async function register(username: string, password: string) {
+  return await instance.post("/api/user/register", {
+    username,
+    password,
+  });
+}
