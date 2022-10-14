@@ -6,7 +6,12 @@ const instance = axios.create({
 });
 
 export async function getUserInfo(): Promise<UserInfo> {
-  return await (
-    await instance.get<UserInfo>("/api/user/info")
-  ).data;
+  return (await instance.get<UserInfo>("/api/user/info")).data;
+}
+
+export async function login(username: string, password: string) {
+  return await instance.post("/api/user/login", {
+    username,
+    password,
+  });
 }
