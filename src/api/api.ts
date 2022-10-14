@@ -22,3 +22,7 @@ export async function register(username: string, password: string) {
     password,
   });
 }
+
+export async function logout() {
+  return await instance.post("/api/user/logout");
+}

@@ -1,12 +1,33 @@
+import { logout } from "@/api/api";
 import { LoadingUserInfoState, UserInfoState } from "@/state/user";
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const MemoAppBar = () => {
   const loading = useRecoilValue(LoadingUserInfoState);
-  const userInfo = useRecoilValue(UserInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
   const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    setUserInfo(null);
+    handleClose();
+  };
 
   return (
     <AppBar position="relative">
@@ -31,9 +52,31 @@ const MemoAppBar = () => {
           </>
         ) : (
           <>
-            <Button color="inherit">{userInfo.username}</Button>
+            <Button
+              color="inherit"
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+            >
+              {userInfo.username}
+            </Button>
           </>
         )}
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleLogout}>登出</MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   );
