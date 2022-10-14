@@ -6,6 +6,7 @@ import NeedLoginPage from "@/components/NeedLoginPage";
 import IndexPage from "@/pages/IndexPage";
 import GlobalMessage from "@/components/GlobalMessage";
 import RegisterPage from "@/pages/RegisterPage";
+import MemoAppBar from "./components/AppBar";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <DefaultStatus />
         <GlobalMessage />
         <HashRouter>
+          <MemoAppBar />
           <Routes>
             <Route
               path="/"
