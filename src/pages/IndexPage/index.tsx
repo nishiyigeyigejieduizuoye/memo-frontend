@@ -65,19 +65,23 @@ const IndexPage = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          {memos.map((m) => (
-            <ListItem key={m.id}>
-              <ListItemButton>
-                <ListItemIcon>
-                  <NotesIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={m.title}
-                  secondary={new Date(m.lastModified).toLocaleString()}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {loading ? (
+            <Loading />
+          ) : (
+            memos.map((m) => (
+              <ListItem key={m.id}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NotesIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={m.title}
+                    secondary={new Date(m.lastModified).toLocaleString()}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))
+          )}
         </List>
       </Drawer>
     </Grid>
