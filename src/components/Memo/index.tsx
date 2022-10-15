@@ -77,7 +77,7 @@ const Memo: React.FunctionComponent<Props> = ({
           </Grid>
           <Grid item xs={12} sx={{ marginTop: "40px" }}>
             <MonacoEditor
-              language="md"
+              language="markdown"
               height="60vh"
               value={detail.content}
               onChange={handleChange}
