@@ -1,13 +1,11 @@
 import EditMemo from "@/components/EditMemo";
-import useMessage from "@/hooks/useMessage";
 import { MemosState } from "@/state/user";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 const EditMemoPage = () => {
   const navigate = useNavigate();
-  const [, { addMessage }] = useMessage();
   const [searchParams] = useSearchParams();
   const memos = useRecoilValue(MemosState);
   const memoId = searchParams.get("id");
