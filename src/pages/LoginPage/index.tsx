@@ -1,6 +1,6 @@
-import { getUserInfo, login } from "@/api/api";
+import { getUserInfo, listMemos, login } from "@/api/api";
 import useMessage from "@/hooks/useMessage";
-import { UserInfoState } from "@/state/user";
+import { MemosState, UserInfoState } from "@/state/user";
 import { LoadingButton } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { FormEvent, useCallback, useState } from "react";
@@ -14,6 +14,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const setUserInfo = useSetRecoilState(UserInfoState);
+  const setMemos = useSetRecoilState(MemosState);
   const [, { addMessage }] = useMessage();
 
   const onSubmit = useCallback(
@@ -22,7 +23,12 @@ const LoginPage = () => {
       setLoading(true);
       try {
         await login(username, password);
-        setUserInfo(await getUserInfo());
+        const [userInfo, memos] = await Promise.all([
+          getUserInfo(),
+          listMemos(),
+        ]);
+        setUserInfo(userInfo);
+        setMemos(memos);
         navigate("/");
       } catch (e) {
         addMessage("error", "登录失败：用户名或密码错误");
