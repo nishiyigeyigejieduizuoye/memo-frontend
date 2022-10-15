@@ -13,9 +13,13 @@ import {
 import { useRecoilValue } from "recoil";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NotesIcon from "@mui/icons-material/Notes";
+import { useMemo, useState } from "react";
+import { MemoDetail, MemoInfo } from "@/api/schema";
+import Memo from "@/components/Memo";
 
 const IndexPage = () => {
   const memos = useRecoilValue(MemosState);
+  const [selectedMemo, setSelectedMemo] = useState<MemoInfo | null>(null);
 
   return (
     <>
@@ -46,7 +50,7 @@ const IndexPage = () => {
             <Divider />
             {memos.map((m) => (
               <ListItem key={m.id}>
-                <ListItemButton>
+                <ListItemButton onClick={() => setSelectedMemo(m)}>
                   <ListItemIcon>
                     <NotesIcon />
                   </ListItemIcon>
@@ -101,7 +105,7 @@ const IndexPage = () => {
           flexGrow={1}
           sx={{ display: { xs: "none", sm: "flex" }, marginLeft: "310px" }}
         >
-          <h1>test</h1>
+          {selectedMemo !== null && <Memo memo={selectedMemo} />}
         </Grid>
       </Grid>
     </>
