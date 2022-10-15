@@ -84,6 +84,44 @@ const IndexPage = () => {
           )}
         </List>
       </Drawer>
+      <Grid
+        xs={12}
+        sm={0}
+        sx={{
+          display: {
+            sm: "none",
+          },
+        }}
+      >
+        <List>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <NoteAddIcon />
+              </ListItemIcon>
+              <ListItemText primary="新建备忘录" />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          {loading ? (
+            <Loading />
+          ) : (
+            memos.map((m) => (
+              <ListItem key={m.id}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NotesIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={m.title}
+                    secondary={new Date(m.lastModified).toLocaleString()}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))
+          )}
+        </List>
+      </Grid>
     </Grid>
   );
 };
