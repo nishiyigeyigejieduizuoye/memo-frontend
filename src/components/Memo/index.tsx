@@ -15,8 +15,8 @@ interface Props {
   memo: MemoInfo | null;
   showDelete?: boolean;
   defaultTab?: "view" | "edit";
-  handleSave?: (memo: MemoDetail) => {};
-  handleDelete?: (memo: MemoDetail) => {};
+  handleSave?: (memo: MemoDetail) => void;
+  handleDelete?: (memo: MemoDetail) => void;
 }
 
 const Memo: React.FunctionComponent<Props> = ({
@@ -113,9 +113,9 @@ const Memo: React.FunctionComponent<Props> = ({
 
   return (
     <Grid container justifyContent="center" className="memo-container">
-      <Grid item xs={10}>
+      <Grid item xs={12} sm={10}>
         <Grid container>
-          <Grid item xs={5}>
+          <Grid item xs={10}>
             <Tabs value={tab} onChange={(_event, newVal) => setTab(newVal)}>
               <Tab value="view" label="查看" />
               <Tab value="edit" label="编辑" />
@@ -148,7 +148,7 @@ const Memo: React.FunctionComponent<Props> = ({
           )}
         </Grid>
       </Grid>
-      <Grid item xs={10} sx={{ marginTop: "20px" }}>
+      <Grid item xs={12} sm={10} sx={{ marginTop: "20px" }}>
         {body}
       </Grid>
     </Grid>

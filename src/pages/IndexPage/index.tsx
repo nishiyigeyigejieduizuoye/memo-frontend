@@ -15,9 +15,12 @@ import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NotesIcon from "@mui/icons-material/Notes";
 import { useState } from "react";
 import { MemoInfo } from "@/api/schema";
-import Memo from "@/components/Memo";
+import EditMemo from "@/components/EditMemo";
+import CreateMemo from "@/components/CreateMemo";
+import { useNavigate } from "react-router-dom";
 
 const IndexPage = () => {
+  const navigate = useNavigate();
   const memos = useRecoilValue(MemosState);
   const [selectedMemo, setSelectedMemo] = useState<MemoInfo | null>(null);
 
@@ -39,7 +42,7 @@ const IndexPage = () => {
         <Divider />
         <List>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => setSelectedMemo(null)}>
               <ListItemIcon>
                 <NoteAddIcon />
               </ListItemIcon>
@@ -83,7 +86,7 @@ const IndexPage = () => {
         >
           <List>
             <ListItem>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate("/create")}>
                 <ListItemIcon>
                   <NoteAddIcon />
                 </ListItemIcon>
@@ -93,7 +96,9 @@ const IndexPage = () => {
             <Divider />
             {memos.map((m) => (
               <ListItem key={m.id}>
-                <ListItemButton>
+                <ListItemButton
+                  onClick={() => navigate("/edit?id=" + m.id.toString())}
+                >
                   <ListItemIcon>
                     <NotesIcon />
                   </ListItemIcon>
@@ -115,7 +120,14 @@ const IndexPage = () => {
             display: { xs: "none", sm: "flex" },
           }}
         >
-          {selectedMemo !== null && <Memo memo={selectedMemo} />}
+          {selectedMemo ? (
+            <EditMemo
+              memo={selectedMemo}
+              onDeleted={() => setSelectedMemo(null)}
+            />
+          ) : (
+            <CreateMemo onCreated={setSelectedMemo} />
+          )}
         </Grid>
       </Grid>
     </>

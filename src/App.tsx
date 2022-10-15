@@ -9,6 +9,8 @@ import RegisterPage from "@/pages/RegisterPage";
 import MemoAppBar from "./components/AppBar";
 import { CssBaseline } from "@mui/material";
 import { Container } from "@mui/system";
+import CreateMemoPage from "./pages/CreateMemoPage";
+import EditMemoPage from "./pages/EditMemoPage";
 
 function App() {
   return (
@@ -26,6 +28,22 @@ function App() {
                 element={
                   <NeedLoginPage>
                     <IndexPage />
+                  </NeedLoginPage>
+                }
+              />
+              <Route
+                path="/create"
+                element={
+                  <NeedLoginPage>
+                    <CreateMemoPage />
+                  </NeedLoginPage>
+                }
+              />
+              <Route
+                path="/edit"
+                element={
+                  <NeedLoginPage>
+                    <EditMemoPage />
                   </NeedLoginPage>
                 }
               />
