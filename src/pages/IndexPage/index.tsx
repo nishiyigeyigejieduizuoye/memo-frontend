@@ -1,8 +1,4 @@
-import { listMemos } from "@/api/api";
-import { MemoInfo } from "@/api/schema";
-import Loading from "@/components/Loading";
-import useMessage from "@/hooks/useMessage";
-import { UserInfoState } from "@/state/user";
+import { MemosState } from "@/state/user";
 import {
   Divider,
   Drawer,
@@ -14,28 +10,12 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NotesIcon from "@mui/icons-material/Notes";
 
 const IndexPage = () => {
-  const userInfo = useRecoilValue(UserInfoState);
-  const [loading, setLoading] = useState(true);
-  const [memos, setMemos] = useState<MemoInfo[]>([]);
-  const [, { addMessage }] = useMessage();
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setMemos(await listMemos());
-      } catch (e) {
-        addMessage("error", "获取备忘录列表失败");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [setMemos, setLoading]);
+  const memos = useRecoilValue(MemosState);
 
   return (
     <Grid container>
@@ -63,23 +43,19 @@ const IndexPage = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          {loading ? (
-            <Loading />
-          ) : (
-            memos.map((m) => (
-              <ListItem key={m.id}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NotesIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={m.title}
-                    secondary={new Date(m.lastModified).toLocaleString()}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))
-          )}
+          {memos.map((m) => (
+            <ListItem key={m.id}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <NotesIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={m.title}
+                  secondary={new Date(m.lastModified).toLocaleString()}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <Grid
@@ -101,23 +77,19 @@ const IndexPage = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          {loading ? (
-            <Loading />
-          ) : (
-            memos.map((m) => (
-              <ListItem key={m.id}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <NotesIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={m.title}
-                    secondary={new Date(m.lastModified).toLocaleString()}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))
-          )}
+          {memos.map((m) => (
+            <ListItem key={m.id}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <NotesIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={m.title}
+                  secondary={new Date(m.lastModified).toLocaleString()}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Grid>
     </Grid>

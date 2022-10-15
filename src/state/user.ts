@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { UserInfo } from "../api/schema";
+import { MemoInfo, UserInfo } from "../api/schema";
 
 export const LoadingUserInfoState = atom<boolean>({
   key: "LoadingUserInfo",
@@ -9,4 +9,9 @@ export const LoadingUserInfoState = atom<boolean>({
 export const UserInfoState = atom<UserInfo | null>({
   key: "CurrentUserInfo",
   default: null,
+});
+
+export const MemosState = atom<MemoInfo[]>({
+  key: "Memos",
+  default: [],
 });

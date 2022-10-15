@@ -1,18 +1,22 @@
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { getUserInfo } from "@/api/api";
-import { LoadingUserInfoState, UserInfoState } from "@/state/user";
+import { getUserInfo, listMemos } from "@/api/api";
+import { LoadingUserInfoState, MemosState, UserInfoState } from "@/state/user";
 
 const DefaultStatus = () => {
   const setUserInfo = useSetRecoilState(UserInfoState);
+  const setMemos = useSetRecoilState(MemosState);
   const settLoadingUserInfo = useSetRecoilState(LoadingUserInfoState);
   useEffect(() => {
     (async () => {
       try {
-        const userInfo = await getUserInfo();
+        const [userInfo, memos] = await Promise.all([
+          getUserInfo(),
+          listMemos(),
+        ]);
         setUserInfo(userInfo);
+        setMemos(memos);
       } catch (e) {
-        setUserInfo(null);
       } finally {
         settLoadingUserInfo(false);
       }
