@@ -7,27 +7,32 @@ import IndexPage from "@/pages/IndexPage";
 import GlobalMessage from "@/components/GlobalMessage";
 import RegisterPage from "@/pages/RegisterPage";
 import MemoAppBar from "./components/AppBar";
+import { CssBaseline } from "@mui/material";
+import { Container } from "@mui/system";
 
 function App() {
   return (
     <RecoilRoot>
       <>
+        <CssBaseline />
         <DefaultStatus />
         <GlobalMessage />
         <HashRouter>
           <MemoAppBar />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <NeedLoginPage>
-                  <IndexPage />
-                </NeedLoginPage>
-              }
-            />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
+          <Container className="main-container" disableGutters>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <NeedLoginPage>
+                    <IndexPage />
+                  </NeedLoginPage>
+                }
+              />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Routes>
+          </Container>
         </HashRouter>
       </>
     </RecoilRoot>

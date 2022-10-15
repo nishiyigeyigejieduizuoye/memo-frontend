@@ -66,7 +66,7 @@ const Memo: React.FunctionComponent<Props> = ({ memo }: Props) => {
           <Grid item xs={12} sx={{ marginTop: "40px" }}>
             <MonacoEditor
               language="md"
-              height="600px"
+              height="60vh"
               value={detail.content}
               onChange={handleChange}
             />
@@ -91,7 +91,7 @@ const Memo: React.FunctionComponent<Props> = ({ memo }: Props) => {
   return (
     <Grid container justifyContent="center" className="memo-container">
       <Grid item xs={10}>
-        <Tabs value={tab} onChange={(_event, newval) => setTab(newval)}>
+        <Tabs value={tab} onChange={(_event, newVal) => setTab(newVal)}>
           <Tab value="view" label="查看" />
           <Tab value="edit" label="编辑" />
         </Tabs>

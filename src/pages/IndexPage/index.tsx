@@ -13,8 +13,8 @@ import {
 import { useRecoilValue } from "recoil";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NotesIcon from "@mui/icons-material/Notes";
-import { useMemo, useState } from "react";
-import { MemoDetail, MemoInfo } from "@/api/schema";
+import { useState } from "react";
+import { MemoInfo } from "@/api/schema";
 import Memo from "@/components/Memo";
 
 const IndexPage = () => {
@@ -23,46 +23,54 @@ const IndexPage = () => {
 
   return (
     <>
-      <Grid container>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: "300px",
-              zIndex: "-1",
-            },
-          }}
-          open
-        >
-          <Toolbar />
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: "300px",
+            zIndex: "1",
+          },
+        }}
+        open
+      >
+        <Toolbar />
+        <Divider />
+        <List>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <NoteAddIcon />
+              </ListItemIcon>
+              <ListItemText primary="新建备忘录" />
+            </ListItemButton>
+          </ListItem>
           <Divider />
-          <List>
-            <ListItem>
-              <ListItemButton>
+          {memos.map((m) => (
+            <ListItem key={m.id}>
+              <ListItemButton onClick={() => setSelectedMemo(m)}>
                 <ListItemIcon>
-                  <NoteAddIcon />
+                  <NotesIcon />
                 </ListItemIcon>
-                <ListItemText primary="新建备忘录" />
+                <ListItemText
+                  primary={m.title}
+                  secondary={new Date(m.lastModified).toLocaleString()}
+                />
               </ListItemButton>
             </ListItem>
-            <Divider />
-            {memos.map((m) => (
-              <ListItem key={m.id}>
-                <ListItemButton onClick={() => setSelectedMemo(m)}>
-                  <ListItemIcon>
-                    <NotesIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={m.title}
-                    secondary={new Date(m.lastModified).toLocaleString()}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
+          ))}
+        </List>
+      </Drawer>
+      <Grid
+        container
+        sx={{
+          paddingLeft: {
+            xs: 0,
+            sm: "310px",
+          },
+        }}
+      >
         <Grid
           item
           xs={12}
@@ -103,7 +111,9 @@ const IndexPage = () => {
           xs={0}
           sm={12}
           flexGrow={1}
-          sx={{ display: { xs: "none", sm: "flex" }, marginLeft: "310px" }}
+          sx={{
+            display: { xs: "none", sm: "flex" },
+          }}
         >
           {selectedMemo !== null && <Memo memo={selectedMemo} />}
         </Grid>

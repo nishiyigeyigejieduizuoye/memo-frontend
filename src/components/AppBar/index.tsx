@@ -30,7 +30,7 @@ const MemoAppBar = () => {
   };
 
   return (
-    <AppBar position="relative">
+    <AppBar position="relative" sx={{ zIndex: "10" }}>
       <Toolbar>
         <Typography
           variant="h6"
