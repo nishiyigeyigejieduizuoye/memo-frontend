@@ -1,7 +1,6 @@
 import { listMemos } from "@/api/api";
 import { MemoInfo } from "@/api/schema";
 import Loading from "@/components/Loading";
-import MemoInfoCard from "@/components/MemoInfoCard";
 import useMessage from "@/hooks/useMessage";
 import { UserInfoState } from "@/state/user";
 import {
@@ -19,7 +18,6 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import NotesIcon from "@mui/icons-material/Notes";
-import "./index.css";
 
 const IndexPage = () => {
   const userInfo = useRecoilValue(UserInfoState);
