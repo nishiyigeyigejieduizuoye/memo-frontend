@@ -3,6 +3,14 @@ import { MemoDetail, MemoInfo } from "@/api/schema";
 import Memo from "@/components/Memo";
 import useMessage from "@/hooks/useMessage";
 import { MemosState } from "@/state/user";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 
@@ -44,6 +52,7 @@ const EditMemo = ({ memo, onDeleted }: Props) => {
         await deleteMemo(detail.id);
         setMemos(await listMemos());
         onDeleted && onDeleted();
+        addMessage("success", "删除成功");
       } catch (e) {
         addMessage("error", "删除失败");
       } finally {
@@ -53,7 +62,9 @@ const EditMemo = ({ memo, onDeleted }: Props) => {
   };
 
   return (
-    <Memo memo={memo} handleSave={handleSave} handleDelete={handleDelete} />
+    <>
+      <Memo memo={memo} handleSave={handleSave} handleDelete={handleDelete} />
+    </>
   );
 };
 

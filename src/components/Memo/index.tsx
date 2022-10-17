@@ -3,7 +3,20 @@ import { MemoDetail, MemoInfo } from "@/api/schema";
 import useMessage from "@/hooks/useMessage";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
-import { Grid, IconButton, Tab, Tabs, TextField, Tooltip } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  Tab,
+  Tabs,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import MonacoEditor from "react-monaco-editor";
@@ -88,6 +101,27 @@ const Memo: React.FunctionComponent<Props> = ({
     }
   }
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  let dialog = (
+    <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <DialogTitle>确认删除</DialogTitle>
+      <DialogContent>是否确认删除</DialogContent>
+      <DialogActions>
+        <Button
+          color="primary"
+          onClick={() => {
+            setDialogOpen(false);
+            handleDelete && handleDelete(detail!);
+          }}
+        >
+          确认
+        </Button>
+        <Button onClick={() => setDialogOpen(false)}>取消</Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -132,15 +166,16 @@ const Memo: React.FunctionComponent<Props> = ({
                 </Tooltip>
               </Grid>
               {showDelete ? (
-                <Grid item xs={1}>
-                  <Tooltip title="删除">
-                    <IconButton
-                      onClick={() => handleDelete && handleDelete(detail)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Grid>
+                <>
+                  <Grid item xs={1}>
+                    <Tooltip title="删除">
+                      <IconButton onClick={() => setDialogOpen(true)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                  {dialog}
+                </>
               ) : (
                 <></>
               )}
